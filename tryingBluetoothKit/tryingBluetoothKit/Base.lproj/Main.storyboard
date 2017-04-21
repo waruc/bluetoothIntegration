@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="tryingBluetoothKit" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iPhone trying to connect" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="liD-VW-9Q2">
+                                <rect key="frame" x="16" y="57" width="187.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iPhone Status: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pDe-en-jmL">
+                                <rect key="frame" x="16" y="28" width="115" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connection status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p9B-mb-j4A">
+                                <rect key="frame" x="16" y="107.5" width="140" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Device name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mVf-5W-0kz">
+                                <rect key="frame" x="16" y="136.5" width="99" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Device id " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6uR-BV-8xd">
+                                <rect key="frame" x="16" y="165.5" width="343" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Data" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mvg-vx-8s4">
+                                <rect key="frame" x="16" y="242" width="36" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="mVf-5W-0kz" firstAttribute="top" secondItem="p9B-mb-j4A" secondAttribute="bottom" constant="8" id="0Vu-cI-v0M"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="6uR-BV-8xd" secondAttribute="trailing" id="281-nE-VB8"/>
+                            <constraint firstItem="pDe-en-jmL" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="6za-Jb-FR0"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="mvg-vx-8s4" secondAttribute="leading" id="Bpf-vd-ig8"/>
+                            <constraint firstItem="6uR-BV-8xd" firstAttribute="top" secondItem="mVf-5W-0kz" secondAttribute="bottom" constant="8" id="Dj3-e6-XTi"/>
+                            <constraint firstItem="p9B-mb-j4A" firstAttribute="top" secondItem="liD-VW-9Q2" secondAttribute="bottom" constant="30" id="FaB-zH-vov"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="6uR-BV-8xd" secondAttribute="leading" id="G3k-Si-SsU"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="mVf-5W-0kz" secondAttribute="leading" id="Jq4-vr-bZc"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="pDe-en-jmL" secondAttribute="leading" id="ZGK-ax-JMz"/>
+                            <constraint firstItem="liD-VW-9Q2" firstAttribute="top" secondItem="pDe-en-jmL" secondAttribute="bottom" constant="8" id="aUN-aX-61U"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="liD-VW-9Q2" secondAttribute="leading" id="cZt-NR-SCU"/>
+                            <constraint firstItem="mvg-vx-8s4" firstAttribute="top" secondItem="6uR-BV-8xd" secondAttribute="bottom" constant="55.5" id="sQ1-UW-TON"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="p9B-mb-j4A" secondAttribute="leading" id="uGR-oT-Ql3"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="connectionLabel" destination="p9B-mb-j4A" id="4Ms-7N-FfU"/>
+                        <outlet property="dataLabel" destination="liD-VW-9Q2" id="6tY-9z-cso"/>
+                        <outlet property="idLabel" destination="6uR-BV-8xd" id="9P3-SI-1fw"/>
+                        <outlet property="nameLabel" destination="mVf-5W-0kz" id="pCn-5d-ebu"/>
+                        <outlet property="speedLabel" destination="mvg-vx-8s4" id="DCM-ZI-cGR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-564" y="141.67916041979012"/>
+        </scene>
+    </scenes>
+</document>
