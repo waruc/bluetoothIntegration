@@ -124,7 +124,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
      This method is invoked when a call to connectPeripheral:options: is successful.
      You typically implement this method to set the peripheral’s delegate and to discover its services.
      */
-    func centralManager(central: CBCentralManager, didConnect peripheral: CBPeripheral) {
+    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         print("**** 🐔Successfully connected!🦄 ****")
         
         // Discover services now that we're connected to the OBD2
