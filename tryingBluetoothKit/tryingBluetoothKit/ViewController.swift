@@ -114,15 +114,19 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         
         for c in service.characteristics! {
             if c.uuid.uuidString == "FFE1" {
-                var enableValue:UInt16 = 269 //'010D'
+                //var enableValue:UInt16 = 269 //'010D'
                 //var enableValue:UInt8 = 13 //'0D'
-                let enableBytes = NSData(bytes: &enableValue, length: MemoryLayout<UInt16>.size)
+                var test = "0D\r"
+                let d2 = test.data(using: String.Encoding.utf8)
+                print(d2)
+//                let enableBytes = NSData(bytes: &enableValue, length: MemoryLayout<UInt8>.size)
+//                print(enableBytes)
                 
                 //dataCharacteristic = c // Take that for data
                 obd2?.setNotifyValue(true, for: c)
                 //obd2?.writeValue(enableBytes as Data, for: c, type: .withoutResponse)
                 //obd2?.readValue(for: c)
-                obd2?.writeValue(enableBytes as Data, for: c, type: .withResponse)
+                obd2?.writeValue(d2! as Data, for: c, type: .withResponse)
             }
         }
     }
