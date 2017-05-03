@@ -96,7 +96,7 @@
 				TargetAttributes = {
 					6EC46E2E1EA3FDE2006E4A5D = {
 						CreatedOnToolsVersion = 8.3.1;
-						DevelopmentTeam = K75D96Y95K;
+						DevelopmentTeam = MYKB4J9SMT;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -261,10 +261,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = K75D96Y95K;
+				DEVELOPMENT_TEAM = MYKB4J9SMT;
 				INFOPLIST_FILE = tryingBluetoothKit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ishansaksena.tryingBluetoothKit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nicknordale.tryingBluetoothKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -274,10 +274,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = K75D96Y95K;
+				DEVELOPMENT_TEAM = MYKB4J9SMT;
 				INFOPLIST_FILE = tryingBluetoothKit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ishansaksena.tryingBluetoothKit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nicknordale.tryingBluetoothKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
