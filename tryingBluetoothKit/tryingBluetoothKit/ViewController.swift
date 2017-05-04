@@ -1,6 +1,25 @@
 import UIKit
 import CoreBluetooth
 
+extension String {
+    func hexadecimal() -> Data? {
+        var data = Data(capacity: characters.count / 2)
+        
+        let regex = try! NSRegularExpression(pattern: "[0-9a-f]{1,2}", options: .caseInsensitive)
+        regex.enumerateMatches(in: self, options: [], range: NSMakeRange(0, characters.count)) { match, flags, stop in
+            let byteString = (self as NSString).substring(with: match!.range)
+            var num = UInt8(byteString, radix: 16)!
+            data.append(&num, count: 1)
+        }
+        
+        guard data.count > 0 else {
+            return nil
+        }
+        
+        return data
+    }
+}
+
 class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     var centralManager: CBCentralManager!
@@ -114,19 +133,10 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         
         for c in service.characteristics! {
             if c.uuid.uuidString == "FFE1" {
-                //var enableValue:UInt16 = 269 //'010D'
-                //var enableValue:UInt8 = 13 //'0D'
-                var test = "0D\r"
-                let d2 = test.data(using: String.Encoding.utf8)
-                print(d2)
-//                let enableBytes = NSData(bytes: &enableValue, length: MemoryLayout<UInt8>.size)
-//                print(enableBytes)
-                
-                //dataCharacteristic = c // Take that for data
+                let speedCmd = "010D\n\r"
+                let cmdBytes = speedCmd.hexadecimal()!
                 obd2?.setNotifyValue(true, for: c)
-                //obd2?.writeValue(enableBytes as Data, for: c, type: .withoutResponse)
-                //obd2?.readValue(for: c)
-                obd2?.writeValue(d2! as Data, for: c, type: .withResponse)
+                obd2?.writeValue(cmdBytes, for: c, type: .withResponse)
             }
         }
     }
@@ -137,39 +147,32 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
             return
         }
         
-        print(characteristic)
-        for b in characteristic.value! {
-            print(b)
-        }
-        
-        print(characteristic.value!.map{ String(format: "%02hhx", $0) }.joined())
-        
-        var currSpeed:UInt8?
+        var metric:Int?
         var returnedBytes = [UInt8](characteristic.value!)
-        if (returnedBytes.index(of: 13) != 0) {
-            currSpeed = returnedBytes[returnedBytes.count - 2]
+        if (returnedBytes.count == 7) {
+            metric = Int("\(String(UnicodeScalar(returnedBytes[returnedBytes.count - 3])))\(String(UnicodeScalar(returnedBytes[returnedBytes.count - 2])))", radix:16)
         }
         
-        if (currSpeed != nil) {
-            print("\n\nThe car's current speed is \(currSpeed!) mph\n\n")
+        if (metric != nil) {
+            print("\n\nReturn val: \(metric!)\n\n")
         }
     }
     
-//    func pauseScan() {
-//        print("*** Pausing Scanning ***")
-//        _ = Timer(timeInterval: timerPauseInterval, target: self, selector: #selector(resumeScan), userInfo: nil, repeats: false)
-//        centralManager.stopScan()
-//    }
-//    
-//    func resumeScan() {
-//        if keepScanning {
-//            print("*** Resuming Scanning ***")
-//            _ = Timer(timeInterval: timerScanInterval, target: self, selector: #selector(pauseScan), userInfo: nil, repeats: false)
-//            centralManager.scanForPeripherals(withServices: nil, options: nil)
-//        } else {
-//            
-//        }
-//    }
+    func pauseScan() {
+        print("*** Pausing Scanning ***")
+        _ = Timer(timeInterval: timerPauseInterval, target: self, selector: #selector(resumeScan), userInfo: nil, repeats: false)
+        centralManager.stopScan()
+    }
+    
+    func resumeScan() {
+        if keepScanning {
+            print("*** Resuming Scanning ***")
+            _ = Timer(timeInterval: timerScanInterval, target: self, selector: #selector(pauseScan), userInfo: nil, repeats: false)
+            centralManager.scanForPeripherals(withServices: nil, options: nil)
+        } else {
+            
+        }
+    }
     
 }
 
