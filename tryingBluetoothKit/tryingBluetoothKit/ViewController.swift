@@ -20,27 +20,6 @@ extension String {
     }
 }
 
-
-//let speedNotificationKey = "speed"
-//
-//class FirstViewController: UIViewController {
-//    @IBOutlet weak var sentNotificationLabel: UILabel!
-//    
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        NotificationCenter.default.addObserver(self, selector: #selector(updateNotificationSentLabel), name: NSNotification.Name(rawValue: mySpecialNotificationKey), object: nil)
-//    }
-//    
-//    // 2. Post notification using "special notification key"
-//    func notify() {
-//        NotificationCenter.default.post(name: Notification.Name(rawValue: mySpecialNotificationKey), object: self)
-//    }
-//    
-//    func updateNotificationSentLabel() {
-//        self.sentNotificationLabel.text = "Notification sent!"
-//    }
-//}
-
 class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     var centralManager: CBCentralManager!
