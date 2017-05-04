@@ -20,6 +20,27 @@ extension String {
     }
 }
 
+
+//let speedNotificationKey = "speed"
+//
+//class FirstViewController: UIViewController {
+//    @IBOutlet weak var sentNotificationLabel: UILabel!
+//    
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        NotificationCenter.default.addObserver(self, selector: #selector(updateNotificationSentLabel), name: NSNotification.Name(rawValue: mySpecialNotificationKey), object: nil)
+//    }
+//    
+//    // 2. Post notification using "special notification key"
+//    func notify() {
+//        NotificationCenter.default.post(name: Notification.Name(rawValue: mySpecialNotificationKey), object: self)
+//    }
+//    
+//    func updateNotificationSentLabel() {
+//        self.sentNotificationLabel.text = "Notification sent!"
+//    }
+//}
+
 class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDelegate {
     
     var centralManager: CBCentralManager!
@@ -34,6 +55,11 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     
     let timerPauseInterval:TimeInterval = 10.0
     let timerScanInterval:TimeInterval = 2.0
+    
+    var timer = Timer()
+    let speedUpdateInterval:TimeInterval = 1.0 // Number of seconds between speed requests
+    
+//    let newValueNotification = Notification.Name("NewValue")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,6 +122,21 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         print("*** Failed to Connect! ***")
     }
     
+    func pauseScan() {
+        print("*** Pausing Scanning ***")
+        _ = Timer(timeInterval: timerPauseInterval, target: self, selector: #selector(resumeScan), userInfo: nil, repeats: false)
+        centralManager.stopScan()
+    }
+    
+    func resumeScan() {
+        if keepScanning {
+            print("*** Resuming Scanning ***")
+            _ = Timer(timeInterval: timerScanInterval, target: self, selector: #selector(pauseScan), userInfo: nil, repeats: false)
+            centralManager.scanForPeripherals(withServices: nil, options: nil)
+        } else {
+            
+        }
+    }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         print("**** Disconnected from Peripheral")
@@ -131,13 +172,9 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
             return
         }
         
-        for c in service.characteristics! {
-            if c.uuid.uuidString == "FFE1" {
-                let speedCmd = "010D\n\r"
-                let cmdBytes = speedCmd.hexadecimal()!
-                obd2?.setNotifyValue(true, for: c)
-                obd2?.writeValue(cmdBytes, for: c, type: .withResponse)
-            }
+        if (service.uuid.uuidString == "FFE0" && service.characteristics![0].uuid.uuidString == "FFE1") {
+            // Found OBD-II input/output service & characteristic
+            monitorMetric(metricCmd: "010D\n\r", bleServiceCharacteristic: service.characteristics![0])
         }
     }
     
@@ -154,24 +191,31 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         }
         
         if (metric != nil) {
-            print("\n\nReturn val: \(metric!)\n\n")
+            print("\n\n Current speed: \(metric!) kph\n\n")
         }
+        
+//        NotificationCenter.default.post(name: newValueNotification, object: ["value": metric!])
     }
     
-    func pauseScan() {
-        print("*** Pausing Scanning ***")
-        _ = Timer(timeInterval: timerPauseInterval, target: self, selector: #selector(resumeScan), userInfo: nil, repeats: false)
-        centralManager.stopScan()
+    func monitorMetric(metricCmd: String, bleServiceCharacteristic: CBCharacteristic) {
+        timer = Timer.scheduledTimer(timeInterval: speedUpdateInterval,
+                                     target: self,
+                                     selector: #selector(monitorMetricRequest),
+                                     userInfo: ["cmd": metricCmd, "bleServiceCharacteristic": bleServiceCharacteristic],
+                                     repeats: true)
     }
     
-    func resumeScan() {
-        if keepScanning {
-            print("*** Resuming Scanning ***")
-            _ = Timer(timeInterval: timerScanInterval, target: self, selector: #selector(pauseScan), userInfo: nil, repeats: false)
-            centralManager.scanForPeripherals(withServices: nil, options: nil)
-        } else {
-            
-        }
+    func monitorMetricRequest(timer: Timer) {
+        let userInfoDict = timer.userInfo as! Dictionary<String, Any>
+        requestMetric(cmd: userInfoDict["cmd"] as! String, bleServiceCharacteristic: userInfoDict["bleServiceCharacteristic"] as! CBCharacteristic)
+    }
+    
+    func requestMetric(cmd: String, bleServiceCharacteristic: CBCharacteristic) {
+        let cmdBytes = cmd.hexadecimal()!
+        obd2?.setNotifyValue(true, for: bleServiceCharacteristic)
+        obd2?.writeValue(cmdBytes, for: bleServiceCharacteristic, type: .withResponse)
+        
+//        NotificationCenter.default.addObserver(self, selector: #selector(getNewValue), name: newValueNotification, object: nil)
     }
     
 }
